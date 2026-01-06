@@ -22,7 +22,7 @@ print(sum(1,3))
 
 
 //위에서 정의한 sum과 동일한 타입의 클로저를 파라미터로 받고, 반환 값이 없는(void) 함수 calculate를 작성해주세요.
-func calculate(_ sum: (Int, Int) -> String, num1: Int, num2: Int,) {
+func calculate(num1: Int, num2: Int, _ sum: (Int, Int) -> String) {
     print(sum(num1, num2))
 }
 

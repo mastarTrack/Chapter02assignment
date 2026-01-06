@@ -20,6 +20,9 @@ answer.required1.calculate(3, 5, answer.required1.sum)
 
 
 // 2.
+// - 고차함수 체이닝 호출 코드
+print(answer.required2.mapChain([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
+
 // - myMap 호출 코드
 print(answer.required2.myMap([1, 2, 3]) { String($0) })
 
@@ -34,6 +37,7 @@ print(answer.required3.b(["가", "나", "다", "라", "마"]))
 // - 함수 c 호출 코드
 print(answer.required3.c([1, 2, 3, 4, 5]))
 print(answer.required3.c(["가", "나", "다", "라", "마"]))
+
 
 // - 함수 d 호출 코드
 // print(answer.required3.d(["가"]))  // 오류

@@ -69,3 +69,16 @@ for element in introducibleArr {
         break
     }
 }
+
+// 5.
+// - throwing function 호출
+do {
+    try print(Required5()
+        .predictDeliveryDay(for: "우리집", status: .notStarted))
+} catch DeliveryError.notstarted {
+    print("아직 배송이 시작되지 않았습니다.")
+} catch DeliveryError.invalidAddress {
+    print("유효하지 않은 주소입니다. 주소를 다시 입력해주세요.")
+} catch DeliveryError.systemError(reason: let reason) {
+    print("시스템 에러입니다. 사유: \(reason)")
+}

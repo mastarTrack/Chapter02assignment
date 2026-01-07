@@ -26,7 +26,7 @@ func calculate(num1: Int, num2: Int, _ sum: (Int, Int) -> String) {
     print(sum(num1, num2))
 }
 
-calculate(sum, num1: 5, num2: 25)
+calculate(num1: 5, num2: 25, sum)
 
 
 
@@ -65,7 +65,64 @@ let newArr = myMap([1, 2, 3, 4, 5]) { String($0) }
 print(newArr)
 
 
-// 필수 문제 3---------------------------------------------------------------------------
 
+
+// 필수 문제 3---------------------------------------------------------------------------
 // Int 배열의 짝수번째 요소를 제거해서 반환하는 함수 a 를 작성해주세요.
+func a(_ array: [Int]) -> [Int] {
+    var result = [Int]()
+    for i in 0..<array.count {
+        if i % 2 != 0 {
+            result.append(array[i])
+        }
+    }
+    return result
+}
+
+let IntArray = a([1, 2, 3, 4, 5])
+print(IntArray)
+
+
+//String 배열의 짝수번째 요소를 제거해서 반환하는 함수 b 를 작성해주세요.
+func b(_ array: [String]) -> [String] {
+    var result = [String]()
+    for i in 0..<array.count {
+        if i % 2 != 0 {
+            result.append(array[i])
+        }
+    }
+    return result
+}
+let StringArray = b(["가", "나", "다", "라", "마"])
+print(StringArray)
+
+
+//위 두 함수를 하나의 함수로 대체할 수 있는 방법을 고민해보고, 함수 c 로 작성해주세요.
+func c<T>(_ array: [T]) -> [T] {
+    var result = [T]()
+    for i in 0..<array.count {
+        if i % 2 != 0 {
+            result.append(array[i])
+        }
+    }
+    return result
+}
+let StringArray2 = c(["가", "나", "다", "라", "마"])
+let IntArray2 = c([1, 2, 3, 4, 5])
+print(StringArray2, IntArray2)
+
+
+//함수 c 를 기반으로 수정하여 함수 d 를 작성해주세요.
+func d<T: Numeric>(_ array: [T]) -> [T] {
+    var result = [T]()
+    for i in 0..<array.count {
+        if i % 2 != 0 {
+            result.append(array[i])
+        }
+    }
+    return result
+}
+
+let IntArray3 = d([1, 2, 3, 4, 5])
+print(IntArray3)
 

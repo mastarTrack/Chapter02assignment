@@ -66,9 +66,10 @@ for element in introducibleArr {
         let instance = element as? Dog
         instance?.bark()
     } else {
-        break
+        continue
     }
 }
+
 
 // 5.
 // - throwing function 호출

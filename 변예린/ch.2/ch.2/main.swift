@@ -51,22 +51,21 @@ robot.name = "로보트" // 문자열 출력 X
 // - [Introducible] 타입 배열 정의, 배열을 순회하며 고유 메서드 호출
 var introducibleArr: [Introducible] = []
 
-introducibleArr.append(Robot(name: "로봇"))
+introducibleArr.append(robot)
 introducibleArr.append(Cat(name: "고양이"))
 introducibleArr.append(Dog(name: "강아지"))
 
-introducibleArr.enumerated().forEach { index, element in
-    switch index {
-    case 0:
+for element in introducibleArr {
+    if element is Robot {
         let instance = element as? Robot
-        instance?.batterCharge()
-    case 1:
+        instance?.batteryCharge()
+    } else if element is Cat {
         let instance = element as? Cat
         instance?.meow()
-    case 2:
+    } else if element is Dog {
         let instance = element as? Dog
         instance?.bark()
-    default:
+    } else {
         break
     }
 }

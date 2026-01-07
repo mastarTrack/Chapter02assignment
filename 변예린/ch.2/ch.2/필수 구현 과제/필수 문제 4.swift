@@ -33,7 +33,7 @@ struct Robot: Introducible {
     }
     
     // 고유 메서드
-    func batterCharge() {
+    func batteryCharge() {
         print("배터리 충전중...")
     }
 }

@@ -8,9 +8,6 @@
 import Foundation
 
 struct Required5 {
-    
-    var remainingDay: Int = 3 // 함수를 위한 임의 변수 정의
-    
     // 요구 throwing function
     func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String {
         

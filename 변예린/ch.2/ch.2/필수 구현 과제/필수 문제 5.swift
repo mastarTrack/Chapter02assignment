@@ -10,7 +10,6 @@ import Foundation
 struct Required5 {
     // 요구 throwing function
     func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String {
-        
         // 주소가 잘못된 경우
         if address.isEmpty {
             throw DeliveryError.invalidAddress

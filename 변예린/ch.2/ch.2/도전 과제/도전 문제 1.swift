@@ -10,9 +10,9 @@ import Foundation
 //MARK: 자동차 정의
 // Car 클래스 설계
 class Car {
-    var brand: String
-    var model: String
-    var modelYear: String
+    let brand: String
+    let model: String
+    let modelYear: String
     let engine: Engine
     
     init(brand: String, model: String, modelYear: String, engine: Engine) {
@@ -88,10 +88,10 @@ class GasolineEngine: Engine {
 
 // HydrogenEngine 정의
 class HydrogenEngine: Engine {
-    // 현재 작동중인 엔진
+    // 현재 작동 중인 엔진
     private var running: Engine = GasolineEngine() {
         didSet {
-            print("현재 가동중인 엔진이 \(oldValue.type)에서 \(running.type)으로 변경되었습니다.")
+            print("현재 작동 중인 엔진이 \(oldValue.type)에서 \(running.type)으로 변경되었습니다.")
         }
     }
     

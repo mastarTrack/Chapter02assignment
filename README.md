@@ -32,14 +32,15 @@ introducibleArr.enumerated().forEach { index, element in
 
 ## 도전 문제
 ### 1)
-**커스텀 Engine 타입**
+**1️⃣ 커스텀 Engine 타입**
+
 처음에는 열거형 타입으로 정의했으나 제시문에서 'ElectricEngine 타입의 Engine 을 사용해야합니다.' 라는 언급이 있어 클래스로 바꾸었습니다.
 
 각 자식 클래스(`ElectricEngine` 등)는 엔진 타입을 내부에서 주어진 기본값으로 초기화합니다.
 
 열거형 `EngineType`은 `switchEngine(to:)` 함수에서 인자를 안전하게 입력받기 위해 남겨두었습니다.
 
-**HydrogenEngine**
+**2️⃣ HydrogenEngine**
 ```swift
 class HydrogenEngine: Engine {
     // 현재 작동 중인 엔진
@@ -82,7 +83,7 @@ class HydrogenEngine: Engine {
 (자동차의 실제 작동 원리는 모르지만)
 작동 중인 엔진을 실질적으로 변경시키는 것은 `HybridCar`가 아닌 `HybridEngine`이라고 생각했기 때문에 본 클래스 내에서 `running`을 변경시키는 `func switchRunningEngine(to type:)`을 구현하였습니다.
 
-**HybridCar**
+**3️⃣HybridCar**
 
 ```swift
 class HybridCar: Car {

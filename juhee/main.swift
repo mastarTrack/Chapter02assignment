@@ -7,19 +7,17 @@
 
 import Foundation
 
-// 과제 1 풀이
+//과제 1 풀이
 
-var sum: (Int, Int) -> String = { a, b in
+let sum = { (a: Int, b: Int) -> String in
     return "두 수의 합은 \(a + b) 입니다."
 }
 
-sum(10, 20)
-print(sum) // 두 수의 합은 30 입니다. 출력
+print(sum(10, 20)) // 두 수의 합은 30 입니다. 출력
 
 func calculate(a: Int, b: Int, closure: (Int, Int) -> String) -> Void {
-    closure(a, b)
+    print(closure(a, b))
 }
-
 
 
 // 과제 2 풀이
@@ -34,8 +32,8 @@ print(result)
 
 let numbers2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-var result2 = numbers2.filter { $0 % 2 == 0}
-var result3 = result2.map { String($0) }
+let result2 = numbers2.filter { $0 % 2 == 0}
+let result3 = result2.map { String($0) }
 print(result3)
 
 
@@ -52,5 +50,3 @@ let result4 = myMap(a: [1, 2, 3, 4, 5]) {
 }
 
 print(result)
-
-// 과제 3 풀이

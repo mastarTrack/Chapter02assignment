@@ -83,3 +83,32 @@ do {
 } catch DeliveryError.systemError(reason: let reason) {
     print("시스템 에러입니다. 사유: \(reason)")
 }
+
+
+
+//MARK: 도전 문제
+
+// 1.
+// - ElectricCar
+let electric = ElectricCar(brand: "테슬라", model: "Y", modelYear: "2026")
+
+electric.drive()
+electric.stop()
+electric.park()
+print(electric.engine.type)
+
+// - HybridCar
+let hybrid = HybridCar(brand: "기아", model: "셀토스", modelYear: "2026")
+
+hybrid.drive()
+hybrid.switchEngine(to: .electric)
+hybrid.switchEngine(to: .electric)
+hybrid.switchEngine(to: .hydrogen)
+
+/*
+ Q. 상속을 사용하여 기능을 추가하는 것과, 프로토콜 채택을 통해서 기능을 추가하는 것의 장단점, 차이를 고민하고 주석으로 서술해주세요.
+ A. 상속의 경우, 부모 클래스에 정의된 기능을 모두 사용할 수 있으며 재정의를 통해 커스텀할 수 있다는 장점이 있다. 그러나 상속 받은 클래스에는 필요 없는 부분까지 강제적으로 가져야한다는 단점이 있다.
+    반면, 프로토콜은 프로토콜에 정의된 기능만 구현하면 된다는 장점이 있다. 클래스처럼 필요없는 기능까지 가지지 않으므로 공통된 몇 가지 기능(혹은 프로퍼티)만 가지길 원한다면 프로토콜이 유리하다.
+    즉, 대부분 비슷하면서도 조금씩 차이를 갖는 경우라면 상속이, 공통적인 몇 가지만 여러 객체에서 가지길 원하는 경우라면 프로토콜을 사용하는 것이 좋다.
+ */
+

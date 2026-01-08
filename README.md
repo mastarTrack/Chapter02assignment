@@ -97,3 +97,40 @@ class HybridCar: Car {
 문제에서 요구한 `func switchEngine(to:)`는 위에서 언급했듯이 실질적인 동작은 엔진이 해야한다고 생각했으므로 `HybridEngine.switchRunningEngine(to:)`를 동작시키도록 구현하였습니다.
 
 `Car` 클래스의 `engine` 변수는 `Engine`타입이므로 메소드를 사용하기 위해 `HydrogenEngine`으로 다운캐스팅 해주었습니다.
+
+### 2)
+기존에는 구조체 자체에서 제네릭 타입에 프로토콜을 제한했습니다.
+
+```swift
+struct SortableBox<T: Comparable> {
+    var items: [T]
+    
+    mutating func sortItems() {
+        items.sort(by: <)
+    }
+}
+```
+
+그러나 위 방법은 `SortableBox` 인스턴스 생성 당시 제네릭 타입이 `Comparable` 프로토콜을 준수하고 있지 않으면 바로 오류가 발생하게 됩니다.
+
+문제에서는 '타입 T가 `Comparable`을 준수할 때만 메서드 사용 가능', '`Comparable`을 따르지 않을 경우 `sortItems()` 호출 시 컴파일 오류 발생'이라는 조건을 제시합니다.
+
+즉, 위 코드는 컴파일 오류 시점이 '생성 당시'이므로 문제의 '호출 시'와는 상이합니다.
+
+튜터님의 조언으로 where 조건을 사용하여 해결되었습니다.
+
+```swift
+struct SortableBox<T> {
+    var items: [T]
+}
+
+extension SortableBox where T: Comparable {
+    mutating func sortItems() {
+        items.sort(by: <)
+    }
+}
+```
+
+→ 타입 T가 `Comparable`을 준수하지 않으면 `sortItems()` 메소드는 보이지 않습니다.
+
+위 패턴은 매우 다양하게 사용될 수 있으므로 꼭 기억해두겠습니다!

@@ -35,7 +35,10 @@ let numbers2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 
 // 체이닝 방식으로 수정
-let result2 = numbers2.filter { $0 % 2 == 0} .map { String($0) }
+let result2 = numbers2
+    .filter { $0 % 2 == 0}
+    .map { String($0) } // 줄바꿈 (수정), result2 배열 let으로 선언 (수정)
+
 print(result2)
 
 func myMap (a: [Int], operation: (Int) -> String) -> [String] {

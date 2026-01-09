@@ -16,10 +16,10 @@ let sum: (Int, Int) -> String = {(a: Int, b: Int) -> String
 
 print(sum(10, 20)) // 두 수의 합은 30 입니다. 출력
 
-func calculate(a: Int, b: Int, closure: (Int, Int) -> String) -> Void {
+func calculate(a: Int, b: Int, closure: (Int, Int) -> String) {
     print(closure(a, b))
 }
-
+// 함수의 출력값이 없을때 -> Void 생략 가능
 
 // 과제 2 풀이
 

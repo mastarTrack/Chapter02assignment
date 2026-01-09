@@ -68,7 +68,7 @@ func a (array: [Int]) -> [Int] {
 
     for i in array {
         count += 1
-        if count % 2 != 0 {
+        if count % 2 == 0 {
             returnArray.append(i)
         }
     }
@@ -87,7 +87,7 @@ func b (array: [String]) -> [String] {
 
     for i in array {
         count += 1
-        if count % 2 != 0 {
+        if count % 2 == 0 {
             returnArray.append(i)
         }
     }
@@ -107,7 +107,7 @@ func c<T>(array: [T]) ->[T] {
 
     for i in array {
         count += 1
-        if count % 2 != 0 {
+        if count % 2 == 0 {
             returnArray.append(i)
         }
     }

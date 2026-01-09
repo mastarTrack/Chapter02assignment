@@ -26,10 +26,6 @@ import Foundation
 print("\n\n -----------------------------------------")
 print("\n# 필수문제 풀이 01\n")
 
-let test: (Int, Int) -> Int = { value1, value2 in
-    return value1 + value2
-}
-
 // 인트형 파라매터 2개를 받고 문자열을 반환하는 클로져 생성
 let sum: (Int, Int) -> String = { "두 수의 합은 \($0 + $1) 입니다." }
 
@@ -103,18 +99,18 @@ print(result02)
 numbers.append(contentsOf: [6,7,8,9,10])
 
 // 배열에서 짝수 값을 추출하여 문자로 변환하는 함수 선언
-func ChangeArrIntToArrStr (_ arrayInt: [Int])->[String] {
+func changeArrIntToArrStr (_ arrayInt: [Int])->[String] {
     return arrayInt.filter {$0%2==0}.map{"\($0)"}
 }
 
 // 함수호출
-result02 = ChangeArrIntToArrStr(numbers)
+result02 = changeArrIntToArrStr(numbers)
 
 // 결과값 출력
 print("필수 문제 2 - 2 결과값 출력")
 print(result02)
 
-func CustomMap(_ arrInt: [Int], _ changeClosure: ((Int)->String)) ->[String]{
+func customMap(_ arrInt: [Int], _ changeClosure: ((Int)->String)) ->[String]{
     var mapResult: [String] = []
     for intValue in arrInt{
         mapResult.append(changeClosure(intValue))
@@ -122,7 +118,7 @@ func CustomMap(_ arrInt: [Int], _ changeClosure: ((Int)->String)) ->[String]{
     return mapResult
 }
 
-result02 = CustomMap([1,2,3,4,5]){"\($0)"}
+result02 = customMap([1,2,3,4,5]){"\($0)"}
 print("필수 문제 2 - 3 결과값 출력")
 print(result02)
 
@@ -166,7 +162,7 @@ func removeIntArrEvenIndex(_ target: [Int])->[Int] {
         .map{$0.element}
     print("고차함수 풀이 1: \(result)")
     
-    // # 고차 함수를 이용한 문제 해결 - 1
+    // # 고차 함수를 이용한 문제 해결 - 2
     result = target.enumerated()
         .compactMap { (index, value) in
             index % 2 == 1 ? value : nil
@@ -227,17 +223,22 @@ protocol Introducible{
     func introduce() -> String
 }
 
-struct Robot: Introducible{
+class Robot: Introducible{
     var name: String{
-        didSet{
-            guard oldValue != name else {return}
-            print("변경 이후 값:\(name)")
-        }
         willSet{
             guard newValue != name else {return}
             print("name 변경 알림\n변경 이전 값:\(name)")
         }
+        didSet{
+            guard oldValue != name else {return}
+            print("변경 이후 값:\(name)")
+        }
     }
+    
+    init(name: String){
+        self.name = name
+    }
+    
     func introduce()-> String{
         return  "안녕하세요, 저는 \(name)입니다."
     }
@@ -247,8 +248,13 @@ struct Robot: Introducible{
     }
 }
 
-struct Dog: Introducible{
+class Dog: Introducible{
     var name: String
+    
+    init(name: String){
+        self.name = name
+    }
+    
     func introduce()-> String{
         return  "안녕하세요, 저는 \(name)입니다."
     }
@@ -257,8 +263,13 @@ struct Dog: Introducible{
     }
 }
 
-struct Cat: Introducible{
+class Cat: Introducible{
     var name: String
+    
+    init(name: String){
+        self.name = name
+    }
+    
     func introduce()-> String{
         return  "안녕하세요, 저는 \(name)입니다."
     }
@@ -271,24 +282,18 @@ var robot:Robot = Robot(name: "태권브이")
 let dog:Dog = Dog(name: "백구")
 let cat:Cat = Cat(name: "나비")
 
-robot.name = "마징가"
-print("")
-
 let introducible:[Introducible] = [robot,dog,cat]
 
+// 2026/01/09 refector
+// 이중 타입 체크로인한 리소스 낭비 코드 수정
 for intro in introducible{
     switch intro{
-    case is Robot:
-        guard let robots = intro as? Robot else{ continue }
-        robots.chargingBattary()
-    case is Dog:
-        
-        guard let robots = intro as? Dog else{ continue }
-        robots.sit()
-    case is Cat:
-        
-        guard let robots = intro as? Cat else{ continue }
-        robots.knead()
+    case let robot as Robot:
+        robot.chargingBattary()
+    case let dog as Dog:
+        dog.sit()
+    case let cat as Cat:
+        cat.knead()
     default:
         print("특수 행동이 없습니다.")
     }
@@ -300,30 +305,30 @@ print("\n\n -----------------------------------------")
 print("\n# 필수문제 풀이 05\n")
 /*
  우리는 간단한 **택배 도착 예측 시스템**을 만들고 있다고 가정합니다.
-
+ 
  사용자에게 예상 도착일을 알려주려 하지만, 다음과 같은 여러 상황에서 문제가 발생할 수 있습니다:
-
+ 
  - 주소가 잘못된 경우
  - 배송이 아직 시작되지 않은 경우
  - 시스템 서버 에러로 예측이 불가능한 경우
  - [ ]  배송 상태를 표현하는 DeliveryStatus 열거형을 구현하고, 아래 3가지 상태를 포함하도록 합니다.
-     - notStarted
-     - inTransit(daysRemaining: Int)
-     - error
+ - notStarted
+ - inTransit(daysRemaining: Int)
+ - error
  - [ ]  사용자 정의 에러 타입 DeliveryError를 Error 프로토콜을 따르도록 정의합니다.
-     - invalidAddress
-     - notStarted
-     - systemError(reason: String)
+ - invalidAddress
+ - notStarted
+ - systemError(reason: String)
  - [ ]  아래 시그니처를 가진 throwing function 을 구현해봅니다.
-     
-     ```swift
-     func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String
-     ```
-     
-     - 주소가 빈 문자열이면 DeliveryError.invalidAddress를 던져야 합니다.
-     - 배송이 아직 시작되지 않은 경우 DeliveryError.notStarted를 던져야 합니다.
-     - 시스템 에러 상태면 DeliveryError.systemError(reason:)을 던져야 합니다.
-     - 나머지 경우에는 "배송까지 X일 남았습니다." 형태의 문자열을 반환합니다.
+ 
+ ```swift
+ func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String
+ ```
+ 
+ - 주소가 빈 문자열이면 DeliveryError.invalidAddress를 던져야 합니다.
+ - 배송이 아직 시작되지 않은 경우 DeliveryError.notStarted를 던져야 합니다.
+ - 시스템 에러 상태면 DeliveryError.systemError(reason:)을 던져야 합니다.
+ - 나머지 경우에는 "배송까지 X일 남았습니다." 형태의 문자열을 반환합니다.
  - [ ]  위 함수를 do-catch 로 호출하고, 각 에러 상황에 따라 사용자에게 다른 메시지를 출력하세요.
  */
 
@@ -341,45 +346,247 @@ enum DeliveryError: Error{
     case notStarted
     case systemError(reason: String)
     
-    // guard를 이용하여 상태 확인
-    func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String{
-        guard !address.isEmpty else{
-            throw DeliveryError.invalidAddress
-        }
-        guard case .notStarted = status else {
-            throw DeliveryError.notStarted
-        }
-        guard case .error = status else {
-            throw DeliveryError.systemError(reason: "시스템 에러가 발생하였습니다.")
-        }
-        
-        guard case .inTransit(let daysRemaining) = status else {
-            return "배송일에 문제가 있습니다."
-        }
+    
+}
 
-        return "배송까지\(daysRemaining)일 남았습니다."
+// 2026/01/09 refector
+// Switch 문으로 변환
+
+// guard를 이용하여 상태 확인
+func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String{
+    /* guard 로 구현한 코드
+     guard !address.isEmpty else{
+     throw DeliveryError.invalidAddress
+     }
+     guard case .notStarted = status else {
+     throw DeliveryError.notStarted
+     }
+     guard case .error = status else {
+     throw DeliveryError.systemError(reason: "시스템 에러가 발생하였습니다.")
+     }
+     
+     guard case .inTransit(let daysRemaining) = status else {
+     return "배송일에 문제가 있습니다."
+     }
+     
+     return "배송까지\(daysRemaining)일 남았습니다."
+     */
+    
+    guard !address.isEmpty else{
+        throw DeliveryError.invalidAddress
     }
     
-    // Do-Catch 문으로 변환
-    func predictDeliveryDayAnDoCatch(for address: String, status: DeliveryStatus) throws -> String{
-        do{
-            if address.isEmpty{
-                throw DeliveryError.invalidAddress
-            }
-            switch status{
-            case .notStarted:
-                throw DeliveryError.notStarted
-            case .error:
-                throw DeliveryError.systemError(reason: "시스템 에러가 발생하였습니다.")
-            case .inTransit(let daysRemaining):
-                return "배송까지\(daysRemaining)일 남았습니다."
-            }
-        }catch DeliveryError.invalidAddress{
-            return "빈 주소값이 입력되었습니다. 확인 부탁드립니다."
-        }catch DeliveryError.notStarted{
-            return "아직 상품이 배송되지 않았습니다."
-        }catch DeliveryError.systemError(let errorText){
-            return errorText
-        }
+    switch status {
+    case .notStarted:
+        throw DeliveryError.notStarted
+        
+    case .error:
+        throw DeliveryError.systemError(reason: "시스템 에러가 발생하였습니다")
+        
+    case .inTransit(let daysRemaining):
+        return "배송까지 \(daysRemaining)일 남았습니다."
     }
 }
+
+
+// 2026/01/09 refector
+// 상위 함수랑 동일한 코드가 작성되어 있어 함수 호출로 변경
+
+// Do-Catch 문으로 변환
+func predictDeliveryDayAnDoCatch(for address: String, status: DeliveryStatus) throws -> String{
+    do{
+        let result = try predictDeliveryDay(for: address, status: .notStarted)
+        return result
+    }catch DeliveryError.invalidAddress{
+        return "빈 주소값이 입력되었습니다. 확인 부탁드립니다."
+    }catch DeliveryError.notStarted{
+        return "아직 상품이 배송되지 않았습니다."
+    }catch DeliveryError.systemError(let errorText){
+        return errorText
+    }catch{
+        return ("\(error)")
+    }
+}
+
+
+print("\n\n -----------------------------------------")
+print("\n# 도전문제 풀이 01\n")
+/*
+ - ‘자동차’ 라는 개념을 가지고 객체 지향 설계를 해봅니다.
+ - [ ]  Base Class `Car` 를 설계해주세요.
+ - 4가지의 상태를 정의해주세요.
+ - 브랜드, 모델, 연식
+ - 모두 String 타입입니다.
+ - 엔진
+ - Engine 이라는 커스텀 타입으로 정의해주세요.
+ - 1개의 동작을 정의해주세요.
+ - 운전하기
+ - 동작 예시) “Car 주행 중…”  출력
+ - 추가하고 싶은 상태와 동작은 마음껏 추가해주세요.
+ - stop(), charge(), refuel() 등..
+ - 정의한 각 상태 및 동작에 적절한 접근 제어자를 명시적으로 지정해주세요.
+ - [ ]  `Car` 를 상속한 `ElectricCar` 를 설계해주세요.
+ - ElectricEngine 타입의 Engine 을 사용해야합니다.
+ - [ ]  `Car` 를 상속한 `HybridCar` 를 설계해주세요.
+ - 새로운 엔진 타입 `HydrogenEngine` 을 정의해주세요.
+ - HybridCar 에는 기존 Car 에 없던 새로운 동작이 추가됩니다.
+ - 엔진을 런타임에 바꿀 수 있는 `switchEngine(to:)` 입니다.
+ - [ ]  `HybridCar` 인스턴스를 생성하고, `switchEngine(to:)` 를 호출하여 서로 다른 타입의 엔진으로 교체하는 코드를 작성해주세요.
+ - [ ]  상속을 사용하여 기능을 추가하는 것과, 프로토콜 채택을 통해서 기능을 추가하는 것의 장단점, 차이를 고민하고 주석으로 서술해주세요.
+ */
+
+// 엔진 프로토콜 생성
+protocol Engine{
+    var engineTurnOnOff: Bool {get set}
+    mutating func turnOnOffengine(_ onOff:Bool)->Void
+    func checkEngine()->Bool
+}
+
+// 기름 엔진 구조체 생성
+struct OilEngine: Engine {
+    
+    var engineTurnOnOff: Bool = false
+    
+    mutating func turnOnOffengine(_ onOff: Bool)->Void {
+        engineTurnOnOff = onOff
+        
+        if onOff {
+            print("엔진을 켰습니다.")
+        } else {
+            print("엔진을 껐습니다.")
+        }
+    }
+    func checkEngine()->Bool{
+        return engineTurnOnOff
+    }
+}
+
+// 전기차 엔진 구조체 생성
+struct ElectricEngine: Engine{
+    var engineTurnOnOff: Bool = false
+    
+    mutating func turnOnOffengine(_ onOff: Bool)->Void {
+        engineTurnOnOff = onOff
+        
+        if onOff {
+            print("엔진을 켰습니다.")
+        } else {
+            print("엔진을 껐습니다.")
+        }
+    }
+    func checkEngine()->Bool{
+        return engineTurnOnOff
+    }
+}
+
+// 하이브리트차 엔진 구조체 생성
+struct HydrogenEngine: Engine{
+    var engineTurnOnOff: Bool = false
+    
+    mutating func turnOnOffengine(_ onOff: Bool)->Void {
+        engineTurnOnOff = onOff
+        
+        if onOff {
+            print("엔진을 켰습니다.")
+        } else {
+            print("엔진을 껐습니다.")
+        }
+    }
+    func checkEngine()->Bool{
+        return engineTurnOnOff
+    }
+}
+
+
+// 자동차 클래스 정의
+internal class car {
+    internal var brand: String
+    internal var model: String
+    internal var modelYear: String
+    private var fuelGagage: Int
+    internal var engine: Engine
+    
+    init(model:String,
+         brand:String,
+         modelYear:String,
+         oilGagage:Int,
+         engine:Engine){
+        self.model = model
+        self.brand = brand
+        self.modelYear = modelYear
+        self.fuelGagage = oilGagage
+        self.engine = engine
+    }
+    
+    internal func Driving(){
+        guard engine.checkEngine() else{
+            print("시동이 꺼져있습니다.")
+            return
+        }
+        guard fuelGagage != 0 else{
+            print("연료가 없습니다.")
+            return
+        }
+        fuelGagage -= 10
+        print("Car 주행중...")
+    }
+    
+    internal func turnOnOffEngine(){
+        engine.turnOnOffengine(true)
+    }
+}
+
+//전기차 정의
+internal class electricCar: car{ }
+
+// 하이브리드 차 정의
+internal class hybridCar: car{
+    func switchEngine(to setEngine: Engine) {
+        engine = setEngine
+    }
+}
+
+//자동차의 대한 프로토콜 정의
+protocol carToProtocol{
+    var brand: String {get set}
+    var model: String {get set}
+    var modelYear: String {get set}
+    var fuelGagage: Int {get set}
+    var engine: Engine {get set}
+    
+    func Driving()->Void
+    func turnOnOffEngine()->Void
+}
+
+
+/*
+ 클래스 상속의 장단점
+ 장점: 부모의 프로퍼티와 메소드를 그대로 재사용할 수 있다,
+ 단점: 단일상속만 가능하다. 클래스만 상속이 가능하다.
+ 
+ 프로토콜 채택의 장단점
+ 장점: 클래스 외에도 struct, enum등 유연하게 사용가능하며, 다중채택이 가능하다.
+ 단점: 프로토콜을 채택할때마다 선언된 프로퍼티와 메소드를 초기화 및 구현을 해줘야한다.
+ */
+
+
+print("\n\n -----------------------------------------")
+print("\n# 도전문제 풀이 02\n")
+/*
+ - [ ]  SortableBox 라는 이름의 제네릭 구조체를 정의해주세요.
+ - 타입 파라미터는 1개이며, T 라는 이름으로 지정합니다.
+ - [ ]  SortableBox 에 인스턴스 프로퍼티 `var items: [T]` 를 추가해주세요.
+ - [ ]  타입 T 가 Comparable을 준수할 때에만 sortItems() 메서드를 사용할 수 있도록 구현하세요.
+ - sortItems() 메서드는 items 배열을 오름차순으로 정렬합니다.
+ - 정렬 결과는 items 프로퍼티에 반영되어야 합니다.
+ - [ ]  T 가 Comparable 을 따르지 않는 타입일 경우, sortItems() 호출 시 컴파일 오류가 발생해야합니다.
+ */
+
+struct SortableBox<T: Comparable>{
+    var items: [T]
+    
+    mutating func sortItem(){
+        items.sort(by: >)
+    }
+}
+

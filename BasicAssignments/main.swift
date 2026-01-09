@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+print("--------필수문제 1-------------------")
 // 필수 문제 1--------------------------------------------------------------------------
 
 //두 개의 Int 값을 파라미터로 받고, 하나의 String 값을 반환하는 클로저를 설계해주세요.
@@ -31,7 +31,7 @@ calculate(num1: 5, num2: 25, sum)
 
 
 
-
+print("--------필수문제 2-------------------")
 // 필수 문제 2------------------------------------------------------------------------
 
 //아래 for-in 문을 map 을 사용하는 코드로 변환해주세요.
@@ -39,7 +39,6 @@ let numbers = [1, 2, 3, 4, 5]
 var result = [String]()
 
 result = numbers.map { "\($0)" }
-
 print(result)
 
 
@@ -66,7 +65,7 @@ print(newArr)
 
 
 
-
+print("--------필수문제 3-------------------")
 // 필수 문제 3---------------------------------------------------------------------------
 // Int 배열의 짝수번째 요소를 제거해서 반환하는 함수 a 를 작성해주세요.
 func a(_ array: [Int]) -> [Int] {
@@ -113,6 +112,7 @@ print(StringArray2, IntArray2)
 
 
 //함수 c 를 기반으로 수정하여 함수 d 를 작성해주세요.
+//파라미터의 타입을 << 'Numeric 프로토콜'을 준수하는 타입의 요소를 가진 배열 >> 로 변경합니다.
 func d<T: Numeric>(_ array: [T]) -> [T] {
     var result = [T]()
     for i in 0..<array.count {
@@ -126,3 +126,55 @@ func d<T: Numeric>(_ array: [T]) -> [T] {
 let IntArray3 = d([1, 2, 3, 4, 5])
 print(IntArray3)
 
+
+print("--------필수문제 4-------------------")
+// 필수 문제 4---------------------------------------------------------------------------
+// 타입 정의는 mission4에 있습니다.
+//[Introducible] 타입 배열을 정의하고, Robot, Cat, Dog 인스턴스 1개씩을 append 해주세요.
+var introducibleArray = [Introducible]()
+introducibleArray.append(Cat())
+introducibleArray.append(Dog())
+introducibleArray.append(Robot())
+
+//배열을 순회하며 각 타입 고유의 메서드들을 호출하는 코드를 작성해주세요.
+for i in introducibleArray {
+    switch i {
+    case is Cat:
+        let cat = i as! Cat
+        print(cat.meow())
+    case is Dog:
+        let dog = i as! Dog
+        print(dog.bark())
+    case is Robot:
+        let robot = i as! Robot
+        print(robot.charge())
+    default:
+        print("해당없음")
+    }
+}
+
+
+
+print("--------필수문제 5-------------------")
+// 필수 문제 5---------------------------------------------------------------------------
+//위 함수를 do-catch 로 호출하고, 각 에러 상황에 따라 사용자에게 다른 메시지를 출력하세요.
+
+func test(_ address: String, _ status: DeliveryStatus) {
+    do {
+        let message = try predictDeliveryDay(for: address, status: status)
+        print(message)
+    } catch DeliveryError.invalidAddress {
+        print("잘못된 주소입니다.")
+    } catch DeliveryError.notStarted {
+        print("배송준비중입니다.")
+    } catch DeliveryError.systemError(let reason) {
+        print("\(reason)가 발생했습니다.")
+    } catch {
+        print("알 수 없는 오류 발생했습니다.")
+    }
+}
+
+test("서울", .inTransit(daysRemaining: 2))
+test("", .inTransit(daysRemaining: 2))
+test("서울", .notStarted)
+test("서울", .error)

@@ -144,7 +144,7 @@ print(d(array: [1, 2, 3, 4, 5]))
 // 문제 4 풀이
 
 protocol Introducible {
-    var name: String { get set }
+    var name: String { get } // 외부에서 이름을 변경해야한다는 조건은 없으므로 불필요한 제약조건이 생기는 get set에서 get 제약 조건으로 수정
 
     func introduce() -> String
 }

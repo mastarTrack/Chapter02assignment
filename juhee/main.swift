@@ -165,7 +165,7 @@ class Robot: Introducible {
     func introduce() -> String {
         return "안녕하세요, 저는 \(name) 입니다."
     }
-
+    
     func batteryCharge() -> String {
         return "전원을 충전합니다."
     }
@@ -175,44 +175,44 @@ class Robot: Introducible {
 }
 
 
-    class Cat: Introducible {
-        var name: String
-
-        func introduce() -> String {
-            return "안녕하세요, 저는 \(name) 입니다."
-        }
-
-        func grooming() -> String {
-            return "야옹"
-        }
-
-        init(name: String) {
-            self.name = name
-        }
+class Cat: Introducible {
+    var name: String
+    
+    func introduce() -> String {
+        return "안녕하세요, 저는 \(name) 입니다."
     }
-
-    class Dog: Introducible {
-        var name: String
-
-        func introduce() -> String {
-            return "안녕하세요, 저는 \(name) 입니다."
-        }
-
-        func bark() -> String {
-            return "멍멍멍"
-        }
-
-        init(name: String) {
-            self.name = name
-        }
+    
+    func grooming() -> String {
+        return "야옹"
     }
+    
+    init(name: String) {
+        self.name = name
+    }
+}
 
-    var robot = Robot(name: "로봇")
-    robot.name = "로봇 이름 변경"
+class Dog: Introducible {
+    var name: String
+    
+    func introduce() -> String {
+        return "안녕하세요, 저는 \(name) 입니다."
+    }
+    
+    func bark() -> String {
+        return "멍멍멍"
+    }
+    
+    init(name: String) {
+        self.name = name
+    }
+}
 
-    var cat = Cat(name: "냥이")
+var robot = Robot(name: "로봇")
+robot.name = "로봇 이름 변경"
 
-    var dog = Dog(name: "멈무")
+var cat = Cat(name: "냥이")
+
+var dog = Dog(name: "멈무")
 
 
 

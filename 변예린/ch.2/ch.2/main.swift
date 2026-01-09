@@ -121,3 +121,16 @@ print(comparableBox.items)
 
 var incomparableBox = SortableBox(items: [electric, hybrid]) // T: Car
 // incomparableBox.sortItems() // 컴파일 에러 발생
+
+
+// 3.
+// - 기본 introduce() 동작
+let test = Test()
+print(test.introduce())
+
+// - Robot, Cat, Dog 타입의 커스텀 동작
+print("""
+\(Dog(name: "뽀삐").introduce())
+\(Cat(name: "삐용").introduce())
+\(Robot2(name: "메칸더V").introduce())
+""")

@@ -9,9 +9,9 @@ import Foundation
 
 //과제 1 풀이
 
-let sum = { (a: Int, b: Int) -> String in
-    return "두 수의 합은 \(a + b) 입니다."
-    // 클로저 타입 명시하는법?
+// sum의 타입도 명시하고 클로저 내부 구현도 함
+let sum: (Int, Int) -> String = {(a: Int, b: Int) -> String
+    in return "두 수의 합은 \(a + b) 입니다."
 }
 
 print(sum(10, 20)) // 두 수의 합은 30 입니다. 출력

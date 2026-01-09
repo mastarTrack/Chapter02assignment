@@ -134,3 +134,29 @@ print("""
 \(Cat(name: "삐용").introduce())
 \(Robot2(name: "메칸더V").introduce())
 """)
+
+
+// 4.
+// - 순환 참조 발생 및 해결하기
+func circularRef() {
+    var a: A?
+    var b: B?
+    
+    a = A(name: "personA", home: nil)
+    b = B(name: "apartmentB", tenant: nil)
+    
+    a?.home = b
+    b?.tenant = a
+
+    // 클로저로 인한 순환 참조 발생
+//    b?.closure = {
+//        print("\(a?.name)")
+//    }
+    
+    // 클로저 순환 참조 해결
+    b?.closure = { [weak a] in
+        print("\(a?.name)")
+    }
+}
+
+circularRef()

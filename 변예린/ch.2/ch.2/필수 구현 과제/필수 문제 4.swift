@@ -41,7 +41,7 @@ struct Robot: Introducible {
 // Cat 타입 정의
 struct Cat: Introducible {
     var name: String
-    
+
     func introduce() -> String {
         return "야옹, 저는 \(name)입니다."
     }

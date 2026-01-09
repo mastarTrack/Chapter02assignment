@@ -178,3 +178,15 @@ test("서울", .inTransit(daysRemaining: 2))
 test("", .inTransit(daysRemaining: 2))
 test("서울", .notStarted)
 test("서울", .error)
+
+print("--------도전문제 1-------------------")
+
+let electricCar = ElectricCar(brand: "전기차브랜드", model: "전기차모델", year: "전기차 연식")
+electricCar.drive()
+electricCar.stop()
+//electricCar.engine = HydrogenEngine() 이런식으로 바꿀수 없게 설계
+
+let hybridCar = HybridCar(brand: "하이브리드", model: "모델", year: "연식")
+hybridCar.switchEngine(to: ElectricEngine())
+
+

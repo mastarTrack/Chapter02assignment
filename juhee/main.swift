@@ -144,7 +144,7 @@ print(d(array: [1, 2, 3, 4, 5]))
 // 문제 4 풀이
 
 protocol Introducible {
-    var name: String { get } // 외부에서 이름을 변경해야한다는 조건은 없으므로 불필요한 제약조건이 생기는 get set에서 get 제약 조건으로 수정
+    var name: String { get }
 
     func introduce() -> String
 }
@@ -157,8 +157,7 @@ class Robot: Introducible {
             if newValue != self.name {
                 print("변경 이전 값: \(self.name)")
                 print("변경 이후 값: \(newValue)")
-                self.name = newValue
-            }
+            } // willset은 자동으로 값이 대입되므로 newValue = self.name 필요없음 (수정)
         }
     }
     

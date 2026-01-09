@@ -9,7 +9,7 @@ import Foundation
 
 // 프로토콜 정의
 protocol Introducible {
-    var name: String { get }
+    var name: String { get set }
     
     func introduce() -> String
 }

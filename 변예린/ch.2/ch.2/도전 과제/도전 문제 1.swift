@@ -23,15 +23,15 @@ class Car {
     }
     
     // 접근 제어자와 함께 동작 정의
-    public func drive() {
+    internal func drive() {
         print("[\(brand) \(model)] 주행 중...")
     }
     
-    public func stop() {
+    internal func stop() {
         print("[\(brand) \(model)] 정지")
     }
     
-    public func park() {
+    internal func park() {
         print("[\(brand) \(model)] 주차")
     }
 }

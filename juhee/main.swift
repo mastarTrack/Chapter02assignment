@@ -231,3 +231,47 @@ for i in arrayIntroducible {
         print(dog.bark())
     }
 }
+
+
+// 문제 5 풀이
+
+enum DeliveryStatus{
+    case notStated
+    case inTransit(daysRemaining: Int)
+    case error
+}
+
+enum DeliveryError: Error {
+    case invalidAddress
+    case notStarted
+    case systemError(reason: String)
+}
+
+// throwing function
+func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String {
+    
+    if address.isEmpty {
+        throw DeliveryError.invalidAddress
+    } else {
+        switch status {
+        case .notStated:
+            throw DeliveryError.notStarted
+        case .error:
+            throw DeliveryError.systemError(reason: "알 수 없음")
+        case .inTransit(let daysRemaining):
+            return("배송까지 \(daysRemaining)일 남았습니다.")
+        }
+    }
+}
+
+do {
+    let message = try predictDeliveryDay(for: "제주특별시", status: .inTransit(daysRemaining: 3))
+    print(message)
+} catch DeliveryError.invalidAddress {
+    print("주소가 잘못입력되었습니다. 주소를 확인해주세요.")
+} catch DeliveryError.notStarted {
+    print("배송이 아직 시작되지 않았습니다.")
+} catch DeliveryError.systemError(let reason) {
+    print("시스템 에러가 발생하였습니다: \(reason)")
+}
+

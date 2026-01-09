@@ -391,22 +391,22 @@ class Car{
     private let brand: String
     private let model: String
     private let year: String
-    public var engine: Engine
+    var engine: Engine
     private var isDrive: Bool = false
     private var battery: Int = 50
-    public var fuel: Int = 95
+    var fuel: Int = 95
     
-    public func drive() {
+    func drive() {
         isDrive = true
         fuel -= 10
         print("Car 주행 중...")
     }
-    public func stop(){
+    func stop(){
         isDrive = false
         print("Car 멈춤")
     }
     
-    public func isDriving(){
+    func isDriving(){
         if isDrive == true{
             print("주행 중입니다.")
         }else{
@@ -414,7 +414,7 @@ class Car{
         }
     }
     
-    public func charge(){
+    func charge(){
         if battery == 100{
             print("배터리 충전이 완료된 상태입니다.")
         }else{
@@ -423,20 +423,22 @@ class Car{
         }
     }
     
-    private func isFull(){
-        if fuel >= 100{
-            print("연료가 가득찼습니다.")
-        }
+    private func isFull() -> Bool{
+        return fuel >= 100
     }
-    public func refuel(){
-        if fuel >= 100{
-            isFull()
-        }else if (fuel + 20) >= 100{
+    func refuel(){
+        if isFull(){
+            print("이미 연료가 가득 찼습니다.")
+            return
+        }
+        fuel += 20
+        if fuel > 100 {
             fuel = 100
-            isFull()
-        }else {
-            fuel += 20
-            print("현재 연료의 양은 \(fuel)입니다.")
+        }
+        if isFull(){
+            print("연료가 가득찼습니다.")
+        }else{
+            print("연료가 충전되었습니다. 현재 연료량은 \(fuel)입니다.")
         }
     }
     
@@ -488,8 +490,11 @@ print(hybridcar.engine.engineName)
 //hybridcar.isDriving()
 //hybridcar.charge()
 //hybridcar.refuel()
+//hybridcar.refuel()
+//hybridcar.refuel()
 //hybridcar.drive()
 //print(hybridcar.fuel)
+
 
 /* 7. 상속을 이용한 기능 추가, 프로토콜을 추가하여 기능 추가의 장,단점
  1. 상속
@@ -612,7 +617,7 @@ class A{
     init(name: String){
         self.name = name
     }
-    var B: B?
+    var b: B?
     deinit{ print("\(name) is deinitialized")}
 }
 
@@ -621,7 +626,7 @@ class B{
     init(age: Int) {
         self.age = age
     }
-    weak var A: A?
+    weak var a: A?
     deinit{ print("\(age) is deinitialized")}
     
     var closure: (()->Void)?
@@ -630,8 +635,8 @@ class B{
 var a: A? = A(name: "A") // A RC: 1, B RC: 0
 var b: B? = B(age: 26) // A RC: 1, B RC: 1
 
-a?.B = b // A RC: 1, B RC: 2
-b?.A = a // A RC: 1, B RC: 2
+a?.b = b // A RC: 1, B RC: 2
+b?.a = a // A RC: 1, B RC: 2
 b?.closure = { [weak a] in
         print("\(a?.name ?? "없음")")
 } // A RC: 1, B RC: 2

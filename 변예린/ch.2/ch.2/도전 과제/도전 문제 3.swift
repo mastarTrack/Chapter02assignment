@@ -17,7 +17,7 @@ struct Test: Introducible {
     var name = "Test"
 }
 
-struct Robot2: Introducible {
+class Robot2: Introducible {
     var name: String {
         didSet { // 변경될 때마다 변경 이전값, 이후값 출력
             if oldValue != name {
@@ -28,6 +28,10 @@ struct Robot2: Introducible {
                 """)
             }
         }
+    }
+    
+    init(name: String) {
+        self.name = name
     }
     
     func introduce() -> String {

@@ -15,7 +15,7 @@ protocol Introducible {
 }
 
 // Robot 타입 정의
-struct Robot: Introducible {
+class Robot: Introducible {
     var name: String {
         didSet { // 변경될 때마다 변경 이전값, 이후값 출력
             if oldValue != name {
@@ -26,6 +26,10 @@ struct Robot: Introducible {
                 """)
             }
         }
+    }
+    
+    init(name: String) {
+        self.name = name
     }
     
     func introduce() -> String {
@@ -39,9 +43,13 @@ struct Robot: Introducible {
 }
 
 // Cat 타입 정의
-struct Cat: Introducible {
+class Cat: Introducible {
     var name: String
 
+    init(name: String) {
+        self.name = name
+    }
+    
     func introduce() -> String {
         return "야옹, 저는 \(name)입니다."
     }
@@ -53,8 +61,12 @@ struct Cat: Introducible {
 }
 
 // Dog 타입 정의
-struct Dog: Introducible {
+class Dog: Introducible {
     var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
     
     func introduce() -> String {
         return "멍멍! 저는 \(name)입니다."

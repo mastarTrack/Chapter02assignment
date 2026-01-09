@@ -213,9 +213,11 @@ protocol Introducible{
 class Robot: Introducible{
     var name: String{
         didSet{
-            print("name 변경 알림")
-            print("변경 이전 값: \(oldValue)")
-            print("변경 이후 값: \(name)")
+            if oldValue != name{
+                print("name 변경 알림")
+                print("변경 이전 값: \(oldValue)")
+                print("변경 이후 값: \(name)")
+            }
         }
     }
     var batterySts: Int = 50
@@ -272,6 +274,7 @@ arr.append(robot)
 arr.append(cat)
 arr.append(dog)
 /* robot name 변경 */
+robot.name = "피규어"
 robot.name = "옵티머스"
 /* 배열 순회하며 고유 메서드 출력 */
 for idx in arr{
@@ -284,6 +287,7 @@ for idx in arr{
         d.bark()
     }
 }
+
 
 
 

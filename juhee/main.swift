@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - 과제 1 풀이
 
+// 1-1
 // sum의 타입도 명시하고 클로저 내부 구현도 함
 let sum: (Int, Int) -> String = {(a: Int, b: Int) -> String
     in return "두 수의 합은 \(a + b) 입니다."
@@ -16,6 +17,7 @@ let sum: (Int, Int) -> String = {(a: Int, b: Int) -> String
 
 print(sum(10, 20)) // 두 수의 합은 30 입니다. 출력
 
+// 1-2
 func calculate(a: Int, b: Int, closure: (Int, Int) -> String) {
     print(closure(a, b))
 }
@@ -24,27 +26,32 @@ func calculate(a: Int, b: Int, closure: (Int, Int) -> String) {
 
 
 
-
 // MARK: - 과제 2 풀이
 
+// 2-1
 let numbers = [1, 2, 3, 4, 5]
 
 var result = [String]()
 
 result = numbers.map { String($0) }
-print(result)
+
+print(result) // ["1", "2", "3", "4", "5"] 출력
 
 
+
+// 2-2
 let numbers2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
 
 // 체이닝 방식으로 수정
 let result2 = numbers2
     .filter { $0 % 2 == 0}
     .map { String($0) } // 줄바꿈 (수정), result2 배열 let으로 선언 (수정)
 
-print(result2)
+print(result2) // ["2", "4", "6", "8", "10"] 출력
 
+
+
+// 2-3
 func myMap (a: [Int], operation: (Int) -> String) -> [String] {
     var result = [String]()
     for i in a {
@@ -57,7 +64,7 @@ let result4 = myMap(a: [1, 2, 3, 4, 5]) {
     String($0)
 }
 
-print(result4)
+print(result4) // ["1", "2", "3", "4", "5"] 출력
 
 
 
@@ -140,6 +147,7 @@ print(d(array: [1, 2, 3, 4, 5])) // [2, 4] 출력
 
 // MARK: - 문제 4 풀이
 
+// 4-1
 protocol Introducible {
     var name: String { get }
 
@@ -149,10 +157,11 @@ protocol Introducible {
 
 class Robot: Introducible {
     var name: String {
-        // 프로퍼티 옵져버 쓰기
+        // 프로퍼티 옵져버
         willSet {
             if newValue != name {
-                print("변경 이전 값: \(name)")
+                print("name 변경 알림")
+                print("변경 이전 값: \(name)") // self.name과 name은 같은 값임
                 print("변경 이후 값: \(newValue)")
             } // willset은 자동으로 값이 대입되므로 newValue = self.name 필요없음 (수정)
         }
@@ -165,6 +174,7 @@ class Robot: Introducible {
     func batteryCharge() -> String {
         return "전원을 충전합니다."
     }
+    
     init(name: String) {
         self.name = name
     }
@@ -187,6 +197,7 @@ class Cat: Introducible {
     }
 }
 
+
 class Dog: Introducible {
     var name: String
     
@@ -204,12 +215,13 @@ class Dog: Introducible {
 }
 
 var robot = Robot(name: "로봇")
-robot.name = "로봇 이름 변경"
+robot.name = "로봇" // willSet 출력문 실행 X
+robot.name = "로봇 이름 변경" // name 변경 알림  변경 이전 값: 로봇  변경 이후 값: 로봇 이름 변경 출력
 
+
+// 4-2
 var cat = Cat(name: "냥이")
-
 var dog = Dog(name: "멈무")
-
 
 var arrayIntroducible = [Introducible]()
 
@@ -220,16 +232,15 @@ arrayIntroducible.append(dog)
 for i in arrayIntroducible {
     // i.batteryCharge() error: Value of type 'any Introducible' has no member 'batteryCharge'
     if let robot = i as? Robot {
-        print(robot.batteryCharge())
+        print(robot.batteryCharge()) // 전원을 충전합니다. 출력
     }
     if let cat = i as? Cat {
-        print(cat.grooming())
+        print(cat.grooming()) // 야옹 출력
     }
     if let dog = i as? Dog {
-        print(dog.bark())
+        print(dog.bark()) // 멍멍멍 출력
     }
 }
-
 
 
 
@@ -275,4 +286,3 @@ do {
 } catch DeliveryError.systemError(let reason) {
     print("시스템 에러가 발생하였습니다: \(reason)")
 }
-

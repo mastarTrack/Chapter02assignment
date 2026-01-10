@@ -98,25 +98,23 @@ func b (array: [String]) -> [String] {
 print(b(array: ["가", "나", "다", "라", "마"])) // ["나", "라"] 출력
 
 
-// 3-3
 
+// 3-3
 // 제네릭
 func c<T>(array: [T]) ->[T] {
 
     var returnArray = [T]()
-    var count: Int = 0
 
-    for i in array {
-        count += 1
-        if count % 2 == 0 {
-            returnArray.append(i)
+    for i in 0..<array.count - 1 {
+        if i % 2 == 0 {
+            returnArray.append(array[i])
         }
     }
     return returnArray
 }
 
-print(c(array: [1, 2, 3, 4, 5]))
-print(c(array: ["가", "나", "다", "라", "마"]))
+print(c(array: [1, 2, 3, 4, 5])) // 2, 4 출력
+print(c(array: ["가", "나", "다", "라", "마"])) // ["나", "라"] 출력
 
 
 
@@ -125,19 +123,17 @@ print(c(array: ["가", "나", "다", "라", "마"]))
 func d<T: Numeric>(array: [T]) ->[T] {
 
     var returnArray = [T]()
-    var count: Int = 0
 
-    for i in array {
-        count += 1
-        if count % 2 != 0 {
-            returnArray.append(i)
+    for i in 0..<array.count-1 {
+        if i % 2 == 1 {
+            returnArray.append(array[i])
         }
     }
     return returnArray
 }
 
-print(d(array: [1, 2, 3, 4, 5]))
-// print(d(array: ["가", "나", "다", "라", "마"])) 오류 발생
+print(d(array: [1, 2, 3, 4, 5])) // [2, 4] 출력
+// print(d(array: ["가", "나", "다", "라", "마"])) 오류 발생함, 문자열은 Numeric 프로토콜을 준수하는 타입이 아님
 
 
 

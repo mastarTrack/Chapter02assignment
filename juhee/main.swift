@@ -7,7 +7,7 @@
 
 import Foundation
 
-//과제 1 풀이
+// MARK: - 과제 1 풀이
 
 // sum의 타입도 명시하고 클로저 내부 구현도 함
 let sum: (Int, Int) -> String = {(a: Int, b: Int) -> String
@@ -21,7 +21,11 @@ func calculate(a: Int, b: Int, closure: (Int, Int) -> String) {
 }
 // 함수의 출력값이 없을때 -> Void 생략 가능
 
-// 과제 2 풀이
+
+
+
+
+// MARK: - 과제 2 풀이
 
 let numbers = [1, 2, 3, 4, 5]
 
@@ -58,43 +62,40 @@ print(result4)
 
 
 
-// 과제3 풀이
+// MARK: - 과제3 풀이
 
 // 3-1
 func a (array: [Int]) -> [Int] {
 
     var returnArray = [Int]()
-    var count: Int = 0
 
-    for i in array {
-        count += 1
-        if count % 2 == 0 {
-            returnArray.append(i)
+    for i in 0..<array.count - 1 { // count 변수를 별도로 내가 생성해줄필요없이 .count를 이용하면 더 가독성이 좋고 간략하게 코드를 작성할수있음
+        if i % 2 == 1 { // array의 짝수번째 배열이면 returnArray에 append하기
+            returnArray.append(array[i])
         }
     }
     return returnArray
 }
 
-print(a(array: [1, 2, 3, 4, 5]))
+print(a(array: [1, 2, 3, 4, 5])) // [2, 4] 출력
 
 
 
 // 3-2
+// 3-1번 풀이와 매개변수의 타입만 다를뿐 풀이 방식은 같음
 func b (array: [String]) -> [String] {
 
     var returnArray = [String]()
-    var count: Int = 0
 
-    for i in array {
-        count += 1
-        if count % 2 == 0 {
-            returnArray.append(i)
+    for i in 0..<array.count - 1 {
+        if i % 2 == 1 {
+            returnArray.append(array[i])
         }
     }
     return returnArray
 }
 
-print(b(array: ["가", "나", "다", "라", "마"]))
+print(b(array: ["가", "나", "다", "라", "마"])) // ["나", "라"] 출력
 
 
 // 3-3
@@ -141,7 +142,7 @@ print(d(array: [1, 2, 3, 4, 5]))
 
 
 
-// 문제 4 풀이
+// MARK: - 문제 4 풀이
 
 protocol Introducible {
     var name: String { get }
@@ -154,8 +155,8 @@ class Robot: Introducible {
     var name: String {
         // 프로퍼티 옵져버 쓰기
         willSet {
-            if newValue != self.name {
-                print("변경 이전 값: \(self.name)")
+            if newValue != name {
+                print("변경 이전 값: \(name)")
                 print("변경 이후 값: \(newValue)")
             } // willset은 자동으로 값이 대입되므로 newValue = self.name 필요없음 (수정)
         }
@@ -214,7 +215,6 @@ var cat = Cat(name: "냥이")
 var dog = Dog(name: "멈무")
 
 
-
 var arrayIntroducible = [Introducible]()
 
 arrayIntroducible.append(robot)
@@ -235,7 +235,10 @@ for i in arrayIntroducible {
 }
 
 
-// 문제 5 풀이
+
+
+
+// MARK: - 문제 5 풀이
 
 enum DeliveryStatus{
     case notStated

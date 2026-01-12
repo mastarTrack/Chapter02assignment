@@ -286,3 +286,77 @@ do {
 } catch DeliveryError.systemError(let reason) {
     print("시스템 에러가 발생하였습니다: \(reason)")
 }
+
+
+
+// MARK: - 도전 문제 풀이
+
+
+
+// 1-2 문제
+
+// 제네릭 구조체 정의
+struct SortableBox<T> {
+    var items: [T]
+}
+
+// 타입 T가 Comparable을 준수할 때에만 sortItems() 메서드 확장
+extension SortableBox where T: Comparable {
+    mutating func sortItems() { // mutating 키워드 필수
+        items.sort()
+    }
+}
+
+// Comparable 따르는 타입
+var boxTypeA = SortableBox(items: [4, 10, 3])
+boxTypeA.sortItems()
+print(boxTypeA.items) // [3, 4, 10] 정상 출력
+
+// T가 Comparable이 아닌 구조체 사용
+struct BoxTypeB {
+    var i: Int
+}
+
+var errorBox = SortableBox(items: [BoxTypeB(i: 7), BoxTypeB(i: 27)])
+
+// errorBox.sortItems()
+// 컴파일 에러: Referencing instance method 'sortItems()' on 'SortableBox' requires that 'BoxTypeB' conform to 'Comparable'
+
+
+
+// 1-3 문제
+
+//protocol Introducible {
+//    var name: String { get }
+//    func introduce() -> String
+//}
+//
+//extension Introducible {
+//    func introduce() -> String { // 기본 동작 제공
+//        "안녕하세요. 제 이름은 \(name) 입니다."
+//    }
+//}
+//
+//struct Robot: Introducible {
+//    let name: String
+//    
+//    func introduce() -> String {
+//        "저는 동물이 아닌 로봇 \(name)입니다."
+//    }
+//}
+//
+//struct Cat: Introducible {
+//    let name: String
+//}
+//
+//struct Dog: Introducible {
+//    let name: String
+//}
+//
+//let robot = Robot(name: "쓱싹쓱싹 로봇 청소기")
+//let cat = Cat(name: "아기고냥이")
+//let dog = Dog(name: "모찌")
+//
+//print(robot.introduce()) // 저는 동물이 아닌 로봇 쓱싹쓱싹 로봇 청소기입니다. 출력
+//print(cat.introduce()) // 안녕하세요. 제 이름은 아기고냥이 입니다.
+//print(dog.introduce()) // 안녕하세요. 제 이름은 모찌 입니다.

@@ -1,6 +1,6 @@
 ## CH 2. 프로그래밍 기초 주차 과제
 
-### introducible 프로토콜을 준수하는 객체들을 타입 변환해서 사용하기
+### 필수문제 4) introducible 프로토콜을 준수하는 객체들을 타입 변환해서 사용하기
 ```swift
 for i in introducibleArray {
     switch i {

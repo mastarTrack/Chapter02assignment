@@ -221,11 +221,7 @@ robot.name = "로봇 이름 변경" // name 변경 알림  변경 이전 값: �
 var cat = Cat(name: "냥이")
 var dog = Dog(name: "멈무")
 
-var arrayIntroducible = [Introducible]()
-
-arrayIntroducible.append(robot)
-arrayIntroducible.append(cat)
-arrayIntroducible.append(dog)
+let arrayIntroducible: [Introducible] = [robot, cat, dog] // 선언과 동시에 초기화 하도록 리펙토링
 
 for i in arrayIntroducible {
     // i.batteryCharge() error: Value of type 'any Introducible' has no member 'batteryCharge'
@@ -260,17 +256,16 @@ enum DeliveryError: Error {
 // throwing function
 func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> String {
     
-    if address.isEmpty {
+    guard !address.isEmpty else { // if else 중첩문에서 guard로 리펙토링
         throw DeliveryError.invalidAddress
-    } else {
-        switch status {
-        case .notStated:
-            throw DeliveryError.notStarted
-        case .error:
-            throw DeliveryError.systemError(reason: "알 수 없음")
-        case .inTransit(let daysRemaining):
-            return("배송까지 \(daysRemaining)일 남았습니다.")
-        }
+    }
+    switch status {
+    case .notStated:
+        throw DeliveryError.notStarted
+    case .error:
+        throw DeliveryError.systemError(reason: "알 수 없음")
+    case .inTransit(let daysRemaining):
+        return("배송까지 \(daysRemaining)일 남았습니다.")
     }
 }
 

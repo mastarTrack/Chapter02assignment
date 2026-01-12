@@ -31,7 +31,6 @@ final class HydrogenEngine: Engine {
     }
 }
 
-
 // Base Class Car 를 설계해주세요.
 class Car {
     let brand: String

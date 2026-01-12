@@ -173,7 +173,16 @@ func test(_ address: String, _ status: DeliveryStatus) {
     } catch DeliveryError.systemError(let reason) {
         print("\(reason)가 발생했습니다.")
     } catch {
-        print("알 수 없는 오류 발생했습니다.")
+        print("알 수 없는 오류가 발생했습니다.")
+    }
+}
+
+func test2(_ address: String, _ status: DeliveryStatus) {
+    do {
+        let message = try predictDeliveryDay(for: address, status: status)
+        print(message)
+    } catch {
+        print(error)
     }
 }
 
@@ -181,17 +190,27 @@ test("서울", .inTransit(daysRemaining: 2))
 test("", .inTransit(daysRemaining: 2))
 test("서울", .notStarted)
 test("서울", .error)
+test2("서울", .inTransit(daysRemaining: 2))
+test2("", .inTransit(daysRemaining: 2))
+test2("서울", .notStarted)
+test2("서울", .error)
+
 
 print("--------도전문제 1-------------------")
 let electricCar = ElectricCar(brand: "전기차브랜드", model: "전기차모델", year: "전기차 연식")
 electricCar.drive()
 electricCar.stop()
-//electricCar.engine = HydrogenEngine() 이런식으로 바꿀수 없게 설계
+//electricCar.engine = HydrogenEngine() 
 
 
 let hybridCar = HybridCar(brand: "하이브리드", model: "모델", year: "연식")
 hybridCar.switchEngine(to: ElectricEngine())
 
+
+print("--------도전문제 2-------------------")
+var box = SortableBox(items: [1,5,7,2,8,9])
+box.sortItems()
+print(box.items)
 
 print("--------도전문제 4-------------------")
 makeMemoryLeak()

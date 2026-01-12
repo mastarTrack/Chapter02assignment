@@ -114,9 +114,14 @@ class HybridCar: Car {
 ### protocol
 
 ```swift
-protocol EngineSwitchableCar: CarProtocol {
-    var engine: any EngineProtocol { get set }
-    mutating func switchEngine(to newEngine: any EngineProtocol)
+protocol CarProtocol {
+    var brand: String { get }
+    var model: String { get }
+    var year: String { get }
+    var engine: any EngineProtocol { get }
+    
+    func drive()
+    func stop()
 }
 
 protocol EngineSwitchableCar: CarProtocol {

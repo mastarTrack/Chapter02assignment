@@ -223,16 +223,14 @@ var dog = Dog(name: "멈무")
 
 let arrayIntroducible: [Introducible] = [robot, cat, dog] // 선언과 동시에 초기화 하도록 리펙토링
 
-for i in arrayIntroducible {
+arrayIntroducible.forEach {
     // i.batteryCharge() error: Value of type 'any Introducible' has no member 'batteryCharge'
-    if let robot = i as? Robot {
-        print(robot.batteryCharge()) // 전원을 충전합니다. 출력
-    }
-    if let cat = i as? Cat {
-        print(cat.grooming()) // 야옹 출력
-    }
-    if let dog = i as? Dog {
-        print(dog.bark()) // 멍멍멍 출력
+    if let robot = $0 as? Robot { // 비효율적인 반복을 줄이고 가독성 향상을 위해 else if문으로 수정
+        print(robot.batteryCharge())
+    } else if let cat = $0 as? Cat {
+        print(cat.grooming())
+    } else if let dog = $0 as? Dog {
+        print(dog.bark())
     }
 }
 

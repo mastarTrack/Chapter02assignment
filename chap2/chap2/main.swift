@@ -36,7 +36,6 @@ func calculate(calClosure: (Int, Int) -> String){
     let result = calClosure(20,20)
     print(result)
 }
-
 calculate(calClosure : sum)
 //방법 2. 계산 인자와 클로저를 파라미터로 받음(함수 호출 시에 인자를 지정하여 사용 가능)
 func calculate(val1 : Int, val2 :Int ,calClosure: (Int,Int)->String){
@@ -87,22 +86,29 @@ calculate(val1: 20, val2: 30, calClosure: sum)
 /* 1. for-in -> map 변경*/
 let numbers = [1,2,3,4,5]
 var result = [String]()
-result = numbers.map{String($0)}
+//result = numbers.map{String($0)}
+result = numbers.map(String.init)//재제출. map{}사용 -> map(String.init) 사용 가능
 print(result)
 
 /* 2. 고차함수 체이닝 */
 let num:[Int] = [1,2,3,4,5,6,7,8,9,10]
-var res:[String] = num.filter{$0 % 2 == 0}.map{String($0)}
+//var res:[String] = num.filter{$0 % 2 == 0}.map{String($0)}
+var res = num
+    .filter{ $0.isMultiple(of: 2)}
+    .map(String.init) //재제출. isMultiple(of:)사용 ,map{} -> map(String.init) 사용
 print(res)
 
 /* 3. 고차함수 생성 (map, filter, reduce 사용X */
+//func myMap(_ arr:[Int], toStr: (Int) -> String) -> [String]{
+//    var myres: [String] = []
+//    for idx in arr{
+//        myres.append(toStr(idx))
+//    }
+//    return myres
+//}
 func myMap(_ arr:[Int], toStr: (Int) -> String) -> [String]{
-    var myres: [String] = []
-    for idx in arr{
-        myres.append(toStr(idx))
-    }
-    return myres
-}
+    arr.map(toStr)
+} //재제출. 고자함수 생성 시 클로저 간소화(return 생략 !)
 let arr2 = myMap([1,2,3,4,5]){ //result는 위에서 사용 중이라 arr2로 대체했습니다.
     String($0)
 }
@@ -494,7 +500,6 @@ print(hybridcar.engine.engineName)
 //hybridcar.refuel()
 //hybridcar.drive()
 //print(hybridcar.fuel)
-
 
 /* 7. 상속을 이용한 기능 추가, 프로토콜을 추가하여 기능 추가의 장,단점
  1. 상속

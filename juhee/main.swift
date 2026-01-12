@@ -72,37 +72,35 @@ print(result4) // ["1", "2", "3", "4", "5"] 출력
 // MARK: - 과제3 풀이
 
 // 3-1
-func a (array: [Int]) -> [Int] {
-
-    var returnArray = [Int]()
-
-    for i in 0..<array.count - 1 { // count 변수를 별도로 내가 생성해줄필요없이 .count를 이용하면 더 가독성이 좋고 간략하게 코드를 작성할수있음
-        if i % 2 == 1 { // array의 짝수번째 배열이면 returnArray에 append하기
-            returnArray.append(array[i])
+// 3-1은 .enumarated()를 이용한 풀이로 수정
+func a(_ array: [Int]) -> [Int] {
+    array.enumerated() // [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)]
+        .filter { (idx, _) in // 튜플에서 인덱스만 보고 2의 배수인것만 남긴다
+            idx.isMultiple(of: 2) // [(0, 1), (2, 3), (4, 5)]만 필터링 되어서 남음
         }
-    }
-    return returnArray
+        .map { (_, value) in // 튜플에서 value값만 뽑아서 배열로 만듬
+            value
+        }
+        // [1, 3, 5]
 }
 
-print(a(array: [1, 2, 3, 4, 5])) // [2, 4] 출력
+print(a([1, 2, 3, 4, 5])) // [1, 3, 5] 출력
 
 
 
 // 3-2
 // 3-1번 풀이와 매개변수의 타입만 다를뿐 풀이 방식은 같음
 func b (array: [String]) -> [String] {
-
-    var returnArray = [String]()
-
-    for i in 0..<array.count - 1 {
-        if i % 2 == 1 {
-            returnArray.append(array[i])
+    array.enumerated() // [(0, "가"), (1, "나"), (2, "다"), (3, "라"), (4, "마")]
+        .filter { (idx, _) in // 튜플에서 인덱스만 보고 2의 배수인것만 남긴다
+            idx.isMultiple(of: 2) // [(0, "가"), (2, "다"), (4, "마")]만 필터링 되어서 남음
         }
-    }
-    return returnArray
+        .map { (_, value) in // 튜플에서 value값만 뽑아서 배열로 만듬
+            value
+        }
 }
 
-print(b(array: ["가", "나", "다", "라", "마"])) // ["나", "라"] 출력
+print(b(array: ["가", "나", "다", "라", "마"])) // ["가", "다", "마"] 출력
 
 
 
@@ -112,7 +110,7 @@ func c<T>(array: [T]) ->[T] {
 
     var returnArray = [T]()
 
-    for i in 0..<array.count - 1 {
+    for i in 0..<array.count {
         if i % 2 == 0 {
             returnArray.append(array[i])
         }
@@ -120,8 +118,8 @@ func c<T>(array: [T]) ->[T] {
     return returnArray
 }
 
-print(c(array: [1, 2, 3, 4, 5])) // 2, 4 출력
-print(c(array: ["가", "나", "다", "라", "마"])) // ["나", "라"] 출력
+print(c(array: [1, 2, 3, 4, 5])) //  [1, 3, 5] 출력
+print(c(array: ["가", "나", "다", "라", "마"])) // ["가", "다", "마"] 출력
 
 
 
@@ -131,15 +129,15 @@ func d<T: Numeric>(array: [T]) ->[T] {
 
     var returnArray = [T]()
 
-    for i in 0..<array.count-1 {
-        if i % 2 == 1 {
+    for i in 0..<array.count {
+        if i % 2 == 0 {
             returnArray.append(array[i])
         }
     }
     return returnArray
 }
 
-print(d(array: [1, 2, 3, 4, 5])) // [2, 4] 출력
+print(d(array: [1, 2, 3, 4, 5])) // [1, 3, 5] 출력
 // print(d(array: ["가", "나", "다", "라", "마"])) 오류 발생함, 문자열은 Numeric 프로토콜을 준수하는 타입이 아님
 
 

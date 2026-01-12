@@ -39,7 +39,7 @@ print(Required3().c(["가", "나", "다", "라", "마"]))
 
 // - 함수 d 호출 코드
 // print(answer.required3.d(["가"]))  // 오류
-print(Required3().d([1, 2, 3, 4, 5]))
+print(Required3().d([1.3, 2.5, 3.0, 4.6, 5.6]))
 
 
 // 4.

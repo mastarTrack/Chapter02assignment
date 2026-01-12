@@ -8,7 +8,14 @@
 import Foundation
 
 struct Required3 {
+    //    func a (_ arr: [Int]) -> [Int] {   << 기존 코드
+    //        return arr.enumerated()
+    //            .filter { $0.offset % 2 != 0) }
+    //            .map { $0.element }
+    //    }
+    
     // Int 배열 짝수번째 요소 제거하여 반환
+    //  - filter 조건 수정 : 조건을 좀더 명확히 보이게 하기 위해
     func a (_ arr: [Int]) -> [Int] {
         return arr.enumerated()
             .filter { !$0.offset.isMultiple(of: 2) }
@@ -30,10 +37,11 @@ struct Required3 {
     }
     
     // Numeric 프로토콜을 준수하는 타입을 파라미터로 받는 함수
-    // - 새로운 타입으로 선언할 필요가 없어 T 타입 재사용
+    // - 굳이 다른 타입 이름을 사용할 필요가 없어 T로 수정
     func d<T: Numeric> (_ arr: [T]) -> [T] {
         return arr.enumerated()
             .filter { !$0.offset.isMultiple(of: 2) }
             .map { $0.element }
-    }    
+    }
+    
 }

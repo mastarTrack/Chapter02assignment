@@ -220,8 +220,8 @@ print("\n# 필수문제 풀이 04\n")
 
 protocol Introducible{
     var name:String {get set}
-    func introduce() -> String
 }
+
 
 class Robot: Introducible{
     var name: String{
@@ -239,9 +239,9 @@ class Robot: Introducible{
         self.name = name
     }
     
-    func introduce()-> String{
-        return  "안녕하세요, 저는 \(name)입니다."
-    }
+//    func introduce()-> String{
+//        return  "안녕하세요, 저는 \(name)입니다."
+//    }
     
     func chargingBattary(){
         print("\(name)이(가) 배터리를 충전합니다.")
@@ -255,9 +255,9 @@ class Dog: Introducible{
         self.name = name
     }
     
-    func introduce()-> String{
-        return  "안녕하세요, 저는 \(name)입니다."
-    }
+//    func introduce()-> String{
+//        return  "안녕하세요, 저는 \(name)입니다."
+//    }
     func sit(){
         print("\(name)이(가) 제자리에 앉았습니다.")
     }
@@ -270,9 +270,9 @@ class Cat: Introducible{
         self.name = name
     }
     
-    func introduce()-> String{
-        return  "안녕하세요, 저는 \(name)입니다."
-    }
+//    func introduce()-> String{
+//        return  "안녕하세요, 저는 \(name)입니다."
+//    }
     func knead(){
         print("\(name)이(가) 꾹꾹이를 해줍니다.")
     }
@@ -443,11 +443,11 @@ protocol Engine{
 }
 
 // 기름 엔진 구조체 생성
-struct OilEngine: Engine {
+class OilEngine: Engine {
     
     var engineTurnOnOff: Bool = false
     
-    mutating func turnOnOffengine(_ onOff: Bool)->Void {
+    func turnOnOffengine(_ onOff: Bool)->Void {
         engineTurnOnOff = onOff
         
         if onOff {
@@ -462,10 +462,10 @@ struct OilEngine: Engine {
 }
 
 // 전기차 엔진 구조체 생성
-struct ElectricEngine: Engine{
+class ElectricEngine: Engine{
     var engineTurnOnOff: Bool = false
     
-    mutating func turnOnOffengine(_ onOff: Bool)->Void {
+    func turnOnOffengine(_ onOff: Bool)->Void {
         engineTurnOnOff = onOff
         
         if onOff {
@@ -480,10 +480,10 @@ struct ElectricEngine: Engine{
 }
 
 // 하이브리트차 엔진 구조체 생성
-struct HydrogenEngine: Engine{
+class HydrogenEngine: Engine{
     var engineTurnOnOff: Bool = false
     
-    mutating func turnOnOffengine(_ onOff: Bool)->Void {
+    func turnOnOffengine(_ onOff: Bool)->Void {
         engineTurnOnOff = onOff
         
         if onOff {
@@ -589,4 +589,79 @@ struct SortableBox<T: Comparable>{
         items.sort(by: >)
     }
 }
+
+print("\n\n -----------------------------------------")
+print("\n# 도전문제 풀이 03\n")
+/*
+ 필수문제 4 구현에서 연속된 문제입니다.
+
+ - [ ]  Introducible 프로토콜을 채택하는 타입들에게 **기본 introduce() 동작**을 제공하세요.
+     - 각 타입들이 introduce() 를 구현하지 않고도  introduce() 를 호출할 수 있어야합니다.
+ - [ ]  Robot, Cat, Dog 타입을 정의하고 Introducible 프로토콜을 채택해주세요.
+     - 이 때, Robot 타입은  **기본 introduce() 동작** 이 아닌 커스텀 동작을 하도록 구현해주세요.
+ */
+
+extension Introducible {
+    func introduce()-> String{
+        return  "안녕하세요, 저는 \(name)입니다."
+    }
+}
+
+extension Robot{
+    func introduce()->String{
+        return "삐빅, 저. 의. 이. 름. 은. [\(name)] 입. 니. 다."
+    }
+}
+
+print(robot.introduce())
+print(cat.introduce())
+print(dog.introduce())
+
+
+print("\n\n -----------------------------------------")
+print("\n# 도전문제 풀이 04\n")
+/*
+ - [ ]  클래스 A, B 사이에 순환참조가 발생하도록 구현해주세요.
+     - 각 클래스에 `deinit` 을 정의하여, 메모리 해제 여부를 확인할 수 있도록 해주세요.
+ - [ ]  또한 클래스 B 에는 `closure: (() -> Void)?` 프로퍼티를 만들고, 클로저 내부에서 `A`의 인스턴스를 참조하게 하여 클로저 기반의 순환 참조도 발생시켜보세요.
+ - [ ]  순환 참조를 해결할 수 있도록 weak, unowned 키워드를 클로저 캡처 리스트를 적절히 사용하여 순환 참조를 해결해주세요.
+ */
+
+
+// 생성자 및 소멸자 확인
+var a:A? = A(name: "Gang",age: "00", address: "Seoul",education: nil)
+var b:B? = B(schoolName: "Seoul", major: "Software", information: nil)
+a = nil
+b = nil
+
+print(" ------ ")
+// 순환참조 진행
+var c:A? = A(name: "Gang",age: "00", address: "Seoul",education: nil)
+var d:B? = B(schoolName: "Seoul", major: "Software", information: nil)
+c?.education = d
+d?.information = c
+
+// 클로저 기반 순환참조
+d?.closure = {print("이름: \(d!.information!.name)")}
+d?.closure?()
+
+c = nil
+d = nil
+
+// ------ weak 키워드 사용
+print("\n --- weak --- ")
+
+var aa:C? = C(name: "Gang",age: "00", address: "Seoul",education: nil)
+var bb:D? = D(schoolName: "Seoul", major: "Software", information: nil)
+
+aa?.education = bb
+bb?.information = aa
+
+// 클로저 기반 순환참조
+bb?.closure = {print("이름: \(bb!.information!.name)")}
+bb?.closure?()
+
+
+aa = nil
+bb = nil
 

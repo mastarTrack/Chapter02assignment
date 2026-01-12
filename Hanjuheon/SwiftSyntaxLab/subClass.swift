@@ -46,6 +46,13 @@ class B {
         self.major = major
         self.information = information
     }
+    
+    func setClosure(){
+        closure = {
+            print("이름: \(self.information!.name)")
+        }
+    }
+    
     deinit{
         print("학력정보 소멸자 실행")
     }
@@ -86,7 +93,7 @@ class D {
     init(
         schoolName: String,
         major: String,
-        information: C?
+        information: C?,
     )
     {
         print("weak 학력정보 생성자 실행")
@@ -94,6 +101,13 @@ class D {
         self.major = major
         self.information = information
     }
+    
+    func setClosure(){
+        closure = {
+            [weak self] in print( "이름: \(self?.information!.name ?? "Error")")
+        }
+    }
+    
     deinit{
         print("weak 학력정보 소멸자 실행")
     }

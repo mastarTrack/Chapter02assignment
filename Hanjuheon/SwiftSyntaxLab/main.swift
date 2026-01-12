@@ -629,24 +629,41 @@ print("\n# 도전문제 풀이 04\n")
 
 
 // 생성자 및 소멸자 확인
-var a:A? = A(name: "Gang",age: "00", address: "Seoul",education: nil)
-var b:B? = B(schoolName: "Seoul", major: "Software", information: nil)
+
+
+var a:A? = A(name: "Gang",age: "00", address: "Seoul",education: nil)  // RC:0
+var b:B? = B(schoolName: "Seoul", major: "Software", information: nil) // RC:0
 a = nil
 b = nil
 
 print(" ------ ")
 // 순환참조 진행
-var c:A? = A(name: "Gang",age: "00", address: "Seoul",education: nil)
-var d:B? = B(schoolName: "Seoul", major: "Software", information: nil)
-c?.education = d
-d?.information = c
+func testARC(){
+    var c:A? = A(name: "Gang",age: "00", address: "Seoul",education: nil) //C RC:0
+    var d:B? = B(schoolName: "Seoul", major: "Software", information: nil)//D RC:0
+    c?.education = d  // RC:1
+    d?.information = c// RC:1
+    
+    // 클로저 기반 순환참조
+    
+    /*
+     # 순환참조가 아닌 이유
+     클로저에 할당된 d는 외부 참조값으로 할당된것이기에 d = nil 진행하면 참조값이 사라지며 클로져로 인한 순환참조가 이루어 지지않는다.
+     */
+    //d?.closure = { print("이름: \(d!.information!.name)")}
+    //d?.closure?()
+    
+    // 클로저 순환참조 진행
+    d?.setClosure()
+    
+    c?.education = nil
+    d?.information = nil
+    
+    c = nil  // C RC: 1 -> 메로리 해제 안됨
+    d = nil  // D RC: 1 ->  메로리 해제 안됨
+}
 
-// 클로저 기반 순환참조
-d?.closure = {print("이름: \(d!.information!.name)")}
-d?.closure?()
-
-c = nil
-d = nil
+testARC()
 
 // ------ weak 키워드 사용
 print("\n --- weak --- ")
@@ -658,10 +675,10 @@ aa?.education = bb
 bb?.information = aa
 
 // 클로저 기반 순환참조
-bb?.closure = {print("이름: \(bb!.information!.name)")}
-bb?.closure?()
+bb?.setClosure()
 
-
+aa?.education = nil
+bb?.information = nil
 aa = nil
 bb = nil
 

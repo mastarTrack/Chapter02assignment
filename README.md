@@ -39,7 +39,7 @@ print(StringArray2, IntArray2)
 
 ## 필수문제 4) 타입 캐스팅, 프로퍼티 옵저버 (Property Observer)
 
-- 타입 캐스팅
+### 타입 캐스팅
 ```swift
 for i in introducibleArray {
     switch i {
@@ -63,7 +63,8 @@ for i in introducibleArray {
 처음에는 단순하게 생각해서 해당 인스턴스에 접근해서 메서드를 쓰면 되겠다고 생각했다. 
 하지만 저런 식으로 introducible 타입 Array에 넣으니 타입이 introducible이 되고 따로 타입을 정해주지 않고서는 해당 객체의 메서드를 사용하지 못했다. 그래서 is 와 as를 사용해서 타입 캐스팅을 해서 메서드에 접근할 수 있었다. 
 
-- 프로퍼티 옵저버
+### 프로퍼티 옵저버
+
 저장 프로퍼티의 값이 변경되는 것을 감시하고 있다가 코드블록을 실행 할 수 있는 기능
 `willSet(새로운 변수명) {` , `didSet(새로운 변수명) {` 으로 변수명 따로 사용가능
 ```swift

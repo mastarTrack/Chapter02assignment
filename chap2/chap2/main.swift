@@ -319,17 +319,30 @@ arr.append(dog)
 robot.name = "피규어"
 robot.name = "옵티머스"
 /* 배열 순회하며 고유 메서드 출력 */
-for idx in arr{
-    print(idx.introduce())
-    if let r = idx as? Robot{
+//for idx in arr{
+//    print(idx.introduce())
+//    if let r = idx as? Robot{
+//        r.batteryCharge()
+//    } else if let c = idx as? Cat{
+//        c.meow()
+//    } else if let d = idx as? Dog{
+//        d.bark()
+//    }
+//}
+arr.forEach{ //재제출. 기존: arr배열을 for문을 돌며 고유 메서드 출력 -> forEach 고차 함수를 사용하여 고유 메서드 출력
+    if let r = $0 as? Robot{
         r.batteryCharge()
-    } else if let c = idx as? Cat{
+        return
+    }
+    if let c = $0 as? Cat{
         c.meow()
-    } else if let d = idx as? Dog{
+        return
+    }
+    if let d = $0 as? Dog{
         d.bark()
+        return
     }
 }
-
 
 
 

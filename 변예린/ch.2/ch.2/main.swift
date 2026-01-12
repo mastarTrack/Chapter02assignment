@@ -55,20 +55,35 @@ introducibleArr.append(robot)
 introducibleArr.append(Cat(name: "고양이"))
 introducibleArr.append(Dog(name: "강아지"))
 
-for element in introducibleArr {
-    if element is Robot {
-        let instance = element as? Robot
-        instance?.batteryCharge()
-    } else if element is Cat {
-        let instance = element as? Cat
-        instance?.meow()
-    } else if element is Dog {
-        let instance = element as? Dog
-        instance?.bark()
-    } else {
-        continue
+// 기존 풀이
+//for element in introducibleArr {
+//    if element is Robot {
+//        let instance = element as? Robot
+//        instance?.batteryCharge()
+//    } else if element is Cat {
+//        let instance = element as? Cat
+//        instance?.meow()
+//    } else if element is Dog {
+//        let instance = element as? Dog
+//        instance?.bark()
+//    } else {
+//        continue
+//    }
+//}
+
+// 수정 - 타입캐스팅과 옵셔널 바인딩을 한번에 작성하여 코드 수를 줄임
+// - 옵셔널 바인딩을 사용하여 옵셔널 없이 타입을 사용 가능
+introducibleArr.forEach {
+    if let robot = $0 as? Robot {
+        robot.batteryCharge()
+    } else if let cat = $0 as? Cat {
+        cat.meow()
+    } else if let dog = $0 as? Dog {
+        dog.bark()
     }
 }
+
+
 
 
 // 5.

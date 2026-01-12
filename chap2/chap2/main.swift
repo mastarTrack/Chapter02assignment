@@ -132,54 +132,90 @@ print(arr2)
  */
 
 /* 1. `a` 함수 작성 */
-func a(arr: [Int])->[Int]{
-    var iArr: [Int] = []
-    for idx in 0..<arr.count{
-        if idx % 2 != 0{
-            iArr.append(arr[idx])
+//func a(arr: [Int])->[Int]{
+//    var iArr: [Int] = []
+//    for idx in 0..<arr.count{
+//        if idx % 2 != 0{
+//            iArr.append(arr[idx])
+//        }
+//    }
+//    return iArr
+//}
+func a(arr: [Int]) -> [Int]{ //재제출. 함수 a 고차함수를 이용하도록 변경
+    arr.enumerated()
+        .filter{(idx,_) in
+            !idx.isMultiple(of: 2)
         }
-    }
-    return iArr
+        .map{ (_,value) in
+            value
+        }
 }
 let iArray = [1,2,3,4,5]
 print(a(arr: iArray))
 
 /* 2. `b` 함수 작성 */
-func b(arr: [String])->[String]{
-    var sArr: [String] = []
-    for idx in 0..<arr.count{
-        if idx % 2 != 0{
-            sArr.append(arr[idx])
+//func b(arr: [String])->[String]{
+//    var sArr: [String] = []
+//    for idx in 0..<arr.count{
+//        if idx % 2 != 0{
+//            sArr.append(arr[idx])
+//        }
+//    }
+//    return sArr
+//}
+func b(arr: [String]) -> [String]{ //재제출. 함수 b 고차함수를 이용하도록 변경
+    arr.enumerated()
+        .filter{(idx,_) in
+            !idx.isMultiple(of: 2)
         }
-    }
-    return sArr
+        .map{ (_,value) in
+            value
+        }
 }
 let sArray: [String] = ["가","나","다","라","마"]
 print(b(arr: sArray))
 
 /* 3. `c` 함수 작성 */
-func c<T>(arr: [T])->[T]{
-    var cArr: [T] = []
-    for idx in 0..<arr.count{
-        if idx % 2 != 0{
-            cArr.append(arr[idx])
+//func c<T>(arr: [T])->[T]{
+//    var cArr: [T] = []
+//    for idx in 0..<arr.count{
+//        if idx % 2 != 0{
+//            cArr.append(arr[idx])
+//        }
+//    }
+//    return cArr
+//}
+func c<T>(arr: [T]) -> [T]{ //재제출. 함수 c 고차함수를 이용하도록 변경
+    arr.enumerated()
+        .filter{(idx,_) in
+            !idx.isMultiple(of: 2)
         }
-    }
-    return cArr
+        .map{ (_,value) in
+            value
+        }
 }
 print(c(arr: iArray))
 print(c(arr: sArray))
 
 
 /* 4. `d` 함수 작성 */
-func d<T: Numeric>(arr: [T])->[T]{
-    var dArr: [T] = []
-    for idx in 0..<arr.count{
-        if idx % 2 != 0{
-            dArr.append(arr[idx])
+//func d<T: Numeric>(arr: [T])->[T]{
+//    var dArr: [T] = []
+//    for idx in 0..<arr.count{
+//        if idx % 2 != 0{
+//            dArr.append(arr[idx])
+//        }
+//    }
+//    return dArr
+//}
+func d<T: Numeric>(arr: [T]) -> [T]{ //재제출. 함수 d 고차함수를 이용하도록 변경
+    arr.enumerated()
+        .filter{(idx,_) in
+            !idx.isMultiple(of: 2)
         }
-    }
-    return dArr
+        .map{ (_,value) in
+            value
+        }
 }
 print(d(arr: iArray))
 print(d(arr: [1.0,2.0,3.0,4.0,5.0]))

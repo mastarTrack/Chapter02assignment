@@ -299,18 +299,18 @@ extension SortableBox where T: Comparable {
 }
 
 // Comparable 따르는 타입
-var boxTypeA = SortableBox(items: [4, 10, 3])
-boxTypeA.sortItems()
-print(boxTypeA.items) // [3, 4, 10] 정상 출력
+var intBox = SortableBox(items: [4, 10, 3]) // 변수이름의 의미가 명확히 드러나게 수정 (intBox)
+intBox.sortItems()
+print(intBox.items) // [3, 4, 10] 정상 출력
 
 // T가 Comparable이 아닌 구조체 사용
 struct BoxTypeB {
     var i: Int
 }
 
-var errorBox = SortableBox(items: [BoxTypeB(i: 7), BoxTypeB(i: 27)])
+var nonComparableBox = SortableBox(items: [BoxTypeB(i: 7), BoxTypeB(i: 27)]) // 변수 이름 수정 (가독성)
 
-// errorBox.sortItems()
+// nonComparableBox.sortItems()
 // 컴파일 에러: Referencing instance method 'sortItems()' on 'SortableBox' requires that 'BoxTypeB' conform to 'Comparable'
 
 

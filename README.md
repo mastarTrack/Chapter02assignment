@@ -61,12 +61,13 @@ for i in introducibleArray {
 }
 ```
 처음에는 단순하게 생각해서 해당 인스턴스에 접근해서 메서드를 쓰면 되겠다고 생각했다. 
-하지만 저런 식으로 introducible 타입 Array에 넣으니 타입이 introducible이 되고 따로 타입을 정해주지 않고서는 해당 객체의 메서드를 사용하지 못했다. 그래서 is 와 as를 사용해서 타입 캐스팅을 해서 메서드에 접근할 수 있었다. 
+하지만 저런 식으로 `introducible` 타입 `Array`에 넣으니 타입이 `introducible`이 되고 따로 타입을 정해주지 않고서는 해당 객체의 메서드를 사용하지 못했다. 그래서 `is` 와 `as`를 사용해서 타입 캐스팅을 해서 메서드에 접근할 수 있었다. 
 
 ### 프로퍼티 옵저버
 
-저장 프로퍼티의 값이 변경되는 것을 감시하고 있다가 코드블록을 실행 할 수 있는 기능
-`willSet(새로운 변수명) {` , `didSet(새로운 변수명) {` 으로 변수명 따로 사용가능
+저장 프로퍼티의 값이 변경되는 것을 감시하고 있다가 코드블록을 실행 할 수 있는 기능이다.
+`willSet(새로운 변수명) {` , `didSet(새로운 변수명) {` 으로 변수명 따로 사용가능하다.
+
 ```swift
 class Robot: Introducible {
     var name: String = "로봇" {
@@ -79,7 +80,7 @@ class Robot: Introducible {
 ```
 
 ## 도전문제 1) 접근제어자, prorocol 준수하기
-- 접근제어자
+### 접근제어자
 ```swift
 class Car {
     let brand: String
@@ -110,7 +111,7 @@ class HybridCar: Car {
 위의 코드와 같이 `fileprivate(set)` 접근제어자를 이용해 파일 외부에서는 HybridCar 인스턴스에 접근해서 엔진을 바꿀 수 없게 의도했다.
 엔진을 교체하기 위해서는 `switchEngine(to newEngine:)`를 호출해야 한다.
 
-- protocol
+### protocol
 
 ```swift
 protocol EngineSwitchableCar: CarProtocol {
@@ -124,18 +125,18 @@ protocol EngineSwitchableCar: CarProtocol {
 }
 
 ```
-기능에 따라 protocol을 나누고 알맞은 struct들이 이 프로토콜을 준수하게 했다.
-전기차는 엔진이 바뀌는 기능은 없기에 CarProtocol을 준수하도록 했고
-반대로 하이브리드차는 엔진을 바꿀 수 있기에 EngineSwitchableCar를 준수하게 했다.
+기능에 따라 `protocol`을 나누고 알맞은 `struct`들이 이 프로토콜을 준수하게 했다.
+전기차는 엔진이 바뀌는 기능은 없기에 `CarProtocol`을 준수하도록 했고
+반대로 하이브리드차는 엔진을 바꿀 수 있기에 `EngineSwitchableCar`를 준수하게 했다.
 
 ```swift
 struct ElectricCarS: CarProtocol { ... }
 struct HybridCarS: EngineSwitchableCar { ... }
 ```
 ## 도전문제 2) where 사용
-where는 해당 코드가 동작하기 위해서는 만족해야하는 조건을 나타내준다. 조건을 뒤에 붙이는 필터라고 할 수 있다.
+`where`는 해당 코드가 동작하기 위해서는 만족해야하는 조건을 나타내준다. 조건을 뒤에 붙이는 필터라고 할 수 있다.
 제네릭 타입의 제약이나 제네릭 타입 간의 관계를 나타내기에 편리하다.
-if는 실행흐름을 제어한다면 where는 문법적 제약이나 조건만을 걸러준다.
+`if`는 실행흐름을 제어한다면 `where`는 문법적 제약이나 조건을 걸러준다.
 
 ```swift
 struct SortableBox<T> {
@@ -147,8 +148,8 @@ struct SortableBox<T> {
 }
 ```
 ## 도전문제 3) protocol과 extension 사용
-protocol을 사용하면 protocol 내부에서는 함수 안의 내용을 정의할 수 없다. 
-하지만 extension 사용 시 protocol을 준수하는 모든 인스턴스가 해당 함수를 사용할 수 있게 만들 수 있다.
+`protocol`을 사용하면 `protocol` 내부에서는 함수 안의 내용을 정의할 수 없다. 
+하지만 `extension` 사용 시 `protocol`을 준수하는 모든 인스턴스가 해당 함수를 사용할 수 있게 만들 수 있다.
 
 ```swift
 protocol Introducible {
@@ -165,9 +166,9 @@ extension Introducible {
 
 ## 도전문제 4) 순환참조와 weak 사용
 
-weak은 순환참조가 되지 않도록 참조 카운트를 +하지 않는다.
-weak으로 참조하더라도 그 대상의 생명주기에 영향을 끼치지 않는다.
-weak 키워드가 붙으면 항상 Optional 타입이다 (대상 해제시 nil 로 바뀜)
+`weak`은 순환참조가 되지 않도록 참조 카운트를 `+`하지 않는다.
+`weak`으로 참조하더라도 그 대상의 생명주기에 영향을 끼치지 않는다.
+`weak` 키워드가 붙으면 항상 `Optional` 타입이다 (대상 해제시 `nil` 로 바뀜)
 위의 특징 덕분에 안전하고 참조대상이 사라질 수도 있을 때 사용한다.
 
 ```swift
@@ -209,5 +210,5 @@ func makeMemoryLeak() {
     print("memory leak end")
 }
 ```
-+) unowned도 weak과 똑같이 참조 카운트를 하지 않는다. 
++) `unowned`도 `weak`과 똑같이 참조 카운트를 하지 않는다. 
 하지만 다른 점이 있다면 이 참조 대상은 나보다 오래 살거나, 최소한 나랑 같은 생명주기를 가진다는 강한 확신을 코드로 표현하는 것이다. 때문에 확신이 있을 때만 사용을 권장한다. 

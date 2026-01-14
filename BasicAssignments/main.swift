@@ -139,16 +139,13 @@ introducibleArray.append(Robot())
 //배열을 순회하며 각 타입 고유의 메서드들을 호출하는 코드를 작성해주세요.
 for i in introducibleArray {
     switch i {
-    case is Cat:
-        let cat = i as! Cat
+    case let cat as Cat:
         print(cat.meow())
         print(cat.introduce())
-    case is Dog:
-        let dog = i as! Dog
+    case let dog as Dog:
         print(dog.bark())
         print(dog.introduce())
-    case is Robot:
-        let robot = i as! Robot
+    case let robot as Robot:
         print(robot.charge())
         print(robot.introduce())
     default:

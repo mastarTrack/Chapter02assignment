@@ -239,7 +239,7 @@ arrayIntroducible.forEach {
 // MARK: - 문제 5 풀이
 
 enum DeliveryStatus{
-    case notStated
+    case notStarted
     case inTransit(daysRemaining: Int)
     case error
 }
@@ -257,7 +257,7 @@ func predictDeliveryDay(for address: String, status: DeliveryStatus) throws -> S
         throw DeliveryError.invalidAddress
     }
     switch status {
-    case .notStated:
+    case .notStarted:
         throw DeliveryError.notStarted
     case .error:
         throw DeliveryError.systemError(reason: "알 수 없음")

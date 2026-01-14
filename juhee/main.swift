@@ -11,9 +11,8 @@ import Foundation
 
 // 1-1
 // sum의 타입도 명시하고 클로저 내부 구현도 함
-let sum: (Int, Int) -> String = {(a: Int, b: Int) -> String
-    in "두 수의 합은 \(a + b) 입니다." // return 생략
-}
+// 타입 추론 기능을 이용해 간결하게 리펙토링
+let sum: (Int, Int) -> String = { "두 수의 합은 \(a + b) 입니다." } // return 생략
 
 print(sum(10, 20)) // 두 수의 합은 30 입니다. 출력
 

@@ -155,12 +155,12 @@ protocol Introducible {
 class Robot: Introducible {
     var name: String {
         // 프로퍼티 옵져버
-        willSet {
-            if newValue != name {
+        didSet { // 값이 변경되었음을 알릴때는 willSet보다 didSet이 적합함
+            if oldValue != name {
                 print("name 변경 알림")
-                print("변경 이전 값: \(name)") // self.name과 name은 같은 값임
-                print("변경 이후 값: \(newValue)")
-            } // willset은 자동으로 값이 대입되므로 newValue = self.name 필요없음 (수정)
+                print("변경 이전 값: \(oldValue)")
+                print("변경 이후 값: \(name)")
+            }
         }
     }
     

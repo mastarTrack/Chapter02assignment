@@ -83,6 +83,20 @@ introducibleArr.forEach {
     }
 }
 
+// - 튜터님 피드백 switch문: 옵셔널 바인딩하면서 다운캐스팅 -- 바로 고유메서드 사용 가능
+// default case를 통해 추후 새로운 타입 추가시 적절한 처리 가능
+introducibleArr.forEach {
+    switch $0 {
+    case let robot as Robot:
+        robot.batteryCharge()
+    case let cat as Cat:
+        cat.meow()
+    case let dog as Dog:
+        dog.bark()
+    default:
+        break
+    }
+}
 
 
 

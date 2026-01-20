@@ -65,7 +65,7 @@ enum EngineType {
 
 // Engine 커스텀 타입 정의
 class Engine {
-    var type: EngineType
+    let type: EngineType
     
     init(_ type: EngineType) {
         self.type = type
